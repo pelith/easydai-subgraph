@@ -2,15 +2,16 @@
   "name": "easydai-subgraph",
   "license": "UNLICENSED",
   "scripts": {
-    "codegen": "graph codegen",
+    "codegen": "graph codegen --output-dir src/types/",
     "build": "graph build",
+    "create": "graph create --node https://api.thegraph.com/deploy/ pelith/easydai-subgraph",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ pelith/easydai-subgraph",
-    "create-local": "graph create --node http://localhost:8020/ pelith/easydai-subgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ pelith/easydai-subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 pelith/easydai-subgraph"
+    "create:local": "graph create --node http://localhost:8020/ pelith/easydai-subgraph",
+    "remove:local": "graph remove --node http://localhost:8020/ pelith/easydai-subgraph",
+    "deploy:local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 pelith/easydai-subgraph"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.18.0",
-    "@graphprotocol/graph-ts": "0.18.0"
+    "@graphprotocol/graph-ts": "0.18.1"
   }
 }

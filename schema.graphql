@@ -1,6 +1,40 @@
-type ExampleEntity @entity {
+type Market @entity {
   id: ID!
-  count: BigInt!
-  cashPrior: BigInt! # uint256
-  interestAccumulated: BigInt! # uint256
+  name: String!
+  symbol: String!
+  decimals: Int!
+  underlyingAddress: String!
+  underlyingName: String!
+  underlyingSymbol: String!
+  underlyingDecimals: Int!
+  protocol: Protocol!
+  exchangeRate: BigDecimal!
+  supplyRate: BigDecimal!
+  blockNumber: Int!
+  timestamp: Int!
+}
+
+type Account @entity {
+  id: ID!
+  cToken: [AccountCToken]! @derivedFrom(field: "account")
+}
+
+type AccountCToken @entity {
+  id: ID!
+  market: Market!
+  account: Account!
+  balance: BigDecimal!
+  principalBalance: BigDecimal!
+  totalUnderlyingSupplied: BigDecimal!
+  totalUnderlyingRedeemed: BigDecimal!
+  # underlyingBalance: BigDecimal!
+  # currentInterestAccrued: BigDecimal!
+  # lifetimeInterestAccrued: BigDecimal!
+}
+
+enum Protocol {
+  Compound
+  AAVE
+  Fulcrun
+  MakerDAO
 }
