@@ -4,8 +4,10 @@ import { ERC20 } from '../types/cDAI/ERC20'
 import {
   Market,
   Account,
-  AccountCToken,
+  AccountBond,
 } from '../types/schema'
+
+const SAI_ADDRESS = '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359'
 
 export function exponentToBigDecimal(decimals: i32): BigDecimal {
   let bd = BigDecimal.fromString('1')
@@ -32,8 +34,13 @@ export function loadOrCreateMarket(marketID: string): Market {
     market.decimals = contract.decimals().toI32()
     market.protocol = 'Compound'
     market.underlyingAddress = contract.underlying().toHexString()
-    market.underlyingName = underlying.name()
-    market.underlyingSymbol = underlying.symbol()
+    if (market.underlyingAddress != SAI_ADDRESS) {
+      market.underlyingName = underlying.name()
+      market.underlyingSymbol = underlying.symbol()
+    } else {
+      market.underlyingName = 'Dai Stablecoin v1.0 (DAI)'
+      market.underlyingSymbol = 'SAI'
+    }
     market.underlyingDecimals = underlying.decimals()
     market.exchangeRate = zeroBD
     market.supplyRate = zeroBD
@@ -96,11 +103,11 @@ export function loadOrCreateAccount(accountID: string): Account {
 export function loadOrCreateAccountCToken(
   marketID: string,
   account: string,
-): AccountCToken {
+): AccountBond {
   let accountCTokenID = marketID.concat('-').concat(account)
-  let accountCToken = AccountCToken.load(accountCTokenID)
+  let accountCToken = AccountBond.load(accountCTokenID)
   if (accountCToken === null) {
-    accountCToken = new AccountCToken(accountCTokenID)
+    accountCToken = new AccountBond(accountCTokenID)
     accountCToken.market = marketID
     accountCToken.account = account
     accountCToken.balance = zeroBD
@@ -109,5 +116,5 @@ export function loadOrCreateAccountCToken(
     accountCToken.totalUnderlyingRedeemed = zeroBD
     accountCToken.save()
   }
-  return accountCToken as AccountCToken
+  return accountCToken as AccountBond
 }

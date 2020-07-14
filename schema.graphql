@@ -16,10 +16,10 @@ type Market @entity {
 
 type Account @entity {
   id: ID!
-  cToken: [AccountCToken]! @derivedFrom(field: "account")
+  bonds: [AccountBond]! @derivedFrom(field: "account")
 }
 
-type AccountCToken @entity {
+type AccountBond @entity {
   id: ID!
   market: Market!
   account: Account!
@@ -35,6 +35,6 @@ type AccountCToken @entity {
 enum Protocol {
   Compound
   AAVE
-  Fulcrun
+  Fulcrum
   MakerDAO
 }

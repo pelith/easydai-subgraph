@@ -8,7 +8,7 @@ import {
   loadOrCreateAccount,
   loadOrCreateAccountCToken,
   updateMarket,
-} from './helpers'
+} from '../helpers/ctoken'
 
 export function handleAccrueInterest(event: AccrueInterest): void {
   updateMarket(
@@ -44,7 +44,7 @@ export function handleTransfer(event: Transfer): void {
     let accountFrom = loadOrCreateAccount(accountFromID)
     let cTokenStatsFrom = loadOrCreateAccountCToken(market.id, accountFrom.id)
     cTokenStatsFrom.balance = cTokenStatsFrom.balance.minus(amount)
-    cTokenStatsFrom.principalBalance = cTokenStatsFrom.principalBalance.minus(amountUnderlying)
+    cTokenStatsFrom.principalBalance = cTokenStatsFrom.balance.times(market.exchangeRate)
     cTokenStatsFrom.totalUnderlyingRedeemed = cTokenStatsFrom.totalUnderlyingRedeemed.plus(amountUnderlying)
     cTokenStatsFrom.save()
   }
@@ -58,7 +58,7 @@ export function handleTransfer(event: Transfer): void {
     let accountTo = loadOrCreateAccount(accountToID)
     let cTokenStatsTo = loadOrCreateAccountCToken(market.id, accountTo.id)
     cTokenStatsTo.balance = cTokenStatsTo.balance.plus(amount)
-    cTokenStatsTo.principalBalance = cTokenStatsTo.principalBalance.plus(amountUnderlying)
+    cTokenStatsTo.principalBalance = cTokenStatsTo.balance.times(market.exchangeRate)
     cTokenStatsTo.totalUnderlyingSupplied = cTokenStatsTo.totalUnderlyingSupplied.plus(amountUnderlying)
     cTokenStatsTo.save()
   }
