@@ -23,7 +23,7 @@ type AccountBond @entity {
   id: ID!
   market: Market!
   account: Account!
-  balance: BigDecimal!
+  normalizedBalance: BigDecimal!
   principalBalance: BigDecimal!
   totalUnderlyingSupplied: BigDecimal!
   totalUnderlyingRedeemed: BigDecimal!

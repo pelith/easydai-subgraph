@@ -3,15 +3,17 @@ import {
   Transfer,
 } from '../types/cDAI/CToken'
 import {
+  loadOrCreateAccountBond,
+  loadOrCreateAccount,
+  updateCTokenMarket,
+} from '../utils/helpers'
+import {
   cTokenDecimals,
   cTokenDecimalsBD,
-  loadOrCreateAccount,
-  loadOrCreateAccountCToken,
-  updateMarket,
-} from '../helpers/ctoken'
+} from '../utils/constants'
 
 export function handleAccrueInterest(event: AccrueInterest): void {
-  updateMarket(
+  updateCTokenMarket(
     event.address.toHexString(),
     event.block.number.toI32(),
     event.block.timestamp.toI32()
@@ -20,7 +22,7 @@ export function handleAccrueInterest(event: AccrueInterest): void {
 
 export function handleTransfer(event: Transfer): void {
   let marketID = event.address.toHexString()
-  let market = updateMarket(
+  let market = updateCTokenMarket(
     marketID,
     event.block.number.toI32(),
     event.block.timestamp.toI32()
@@ -42,9 +44,9 @@ export function handleTransfer(event: Transfer): void {
   let accountFromID = event.params.from.toHex()
   if (accountFromID != marketID) {
     let accountFrom = loadOrCreateAccount(accountFromID)
-    let cTokenStatsFrom = loadOrCreateAccountCToken(market.id, accountFrom.id)
-    cTokenStatsFrom.balance = cTokenStatsFrom.balance.minus(amount)
-    cTokenStatsFrom.principalBalance = cTokenStatsFrom.balance.times(market.exchangeRate)
+    let cTokenStatsFrom = loadOrCreateAccountBond(market.id, accountFrom.id)
+    cTokenStatsFrom.normalizedBalance = cTokenStatsFrom.normalizedBalance.minus(amount)
+    cTokenStatsFrom.principalBalance = cTokenStatsFrom.normalizedBalance.times(market.exchangeRate)
     cTokenStatsFrom.totalUnderlyingRedeemed = cTokenStatsFrom.totalUnderlyingRedeemed.plus(amountUnderlying)
     cTokenStatsFrom.save()
   }
@@ -56,9 +58,9 @@ export function handleTransfer(event: Transfer): void {
   let accountToID = event.params.to.toHex()
   if (accountToID != marketID) {
     let accountTo = loadOrCreateAccount(accountToID)
-    let cTokenStatsTo = loadOrCreateAccountCToken(market.id, accountTo.id)
-    cTokenStatsTo.balance = cTokenStatsTo.balance.plus(amount)
-    cTokenStatsTo.principalBalance = cTokenStatsTo.balance.times(market.exchangeRate)
+    let cTokenStatsTo = loadOrCreateAccountBond(market.id, accountTo.id)
+    cTokenStatsTo.normalizedBalance = cTokenStatsTo.normalizedBalance.plus(amount)
+    cTokenStatsTo.principalBalance = cTokenStatsTo.normalizedBalance.times(market.exchangeRate)
     cTokenStatsTo.totalUnderlyingSupplied = cTokenStatsTo.totalUnderlyingSupplied.plus(amountUnderlying)
     cTokenStatsTo.save()
   }
