@@ -11,11 +11,13 @@ import {
 import {
   SAI_ADDRESS,
   MOCK_ETH_ADDRESS,
+  CHAI_ADDRESS,
   exponentToBigDecimal,
   weiDecimals,
   weiDecimalBD,
   cTokenDecimalsBD,
   zeroBD,
+  DAI_ADDRESS,
 } from './constants'
 
 export function loadOrCreateAccount(accountID: string): Account {
@@ -183,6 +185,31 @@ export function updateATokenMarket(marketID: string, exchangeRate: BigDecimal, s
   market.blockNumber = blockNumber
   market.timestamp = timestamp
   market.save()
+
+  return market as Market
+}
+
+// Chai helpers
+
+export function loadOrCreateChaiMarket(): Market {
+  let marketID = CHAI_ADDRESS
+  let market = Market.load(marketID)
+  if (market === null) {
+    market = new Market(marketID)
+    market.name = 'Chai'
+    market.symbol = 'CHAI'
+    market.decimals = 18
+    market.underlyingAddress = DAI_ADDRESS
+    market.underlyingName = 'Dai Stablecoin '
+    market.underlyingSymbol = 'DAI'
+    market.underlyingDecimals = 18
+    market.protocol = 'MakerDAO'
+    market.exchangeRate = zeroBD
+    market.supplyRate = zeroBD
+    market.blockNumber = 0
+    market.timestamp = 0
+    market.save()
+  }
 
   return market as Market
 }

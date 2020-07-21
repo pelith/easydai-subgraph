@@ -2,207 +2,252 @@ specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
+  # - kind: ethereum/contract
+  #   name: cSAI
+  #   network: mainnet
+  #   source:
+  #     address: "0xf5dce57282a584d2746faf1593d3121fcac444dc"
+  #     abi: CToken
+  #     startBlock: 7700000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/ctoken.ts
+  #     entities:
+  #       - Market
+  #       - Account
+  #       - AccountBond
+  #     abis:
+  #       - name: CToken
+  #         file: ./abis/ctoken.json
+  #       - name: ERC20
+  #         file: ./abis/erc20.json
+  #       - name: ERC20Bytes32
+  #         file: './abis/erc20_bytes32.json'
+  #     eventHandlers:
+  #       - event: AccrueInterest(uint256,uint256,uint256)
+  #         handler: handleAccrueInterest
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+  # - kind: ethereum/contract
+  #   name: cDAI
+  #   network: mainnet
+  #   source:
+  #     address: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643"
+  #     abi: CToken
+  #     startBlock: 7700000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/ctoken.ts
+  #     entities:
+  #       - Market
+  #       - Account
+  #       - AccountBond
+  #     abis:
+  #       - name: CToken
+  #         file: ./abis/ctoken.json
+  #       - name: ERC20
+  #         file: ./abis/erc20.json
+  #       - name: ERC20Bytes32
+  #         file: './abis/erc20_bytes32.json'
+  #     eventHandlers:
+  #       - event: AccrueInterest(uint256,uint256,uint256)
+  #         handler: handleAccrueInterest
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+  # - kind: ethereum/contract
+  #   name: cUSDC
+  #   network: mainnet
+  #   source:
+  #     address: "0x39aa39c021dfbae8fac545936693ac917d5e7563"
+  #     abi: CToken
+  #     startBlock: 7700000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/ctoken.ts
+  #     entities:
+  #       - Market
+  #       - Account
+  #       - AccountBond
+  #     abis:
+  #       - name: CToken
+  #         file: ./abis/ctoken.json
+  #       - name: ERC20
+  #         file: ./abis/erc20.json
+  #       - name: ERC20Bytes32
+  #         file: './abis/erc20_bytes32.json'
+  #     eventHandlers:
+  #       - event: AccrueInterest(uint256,uint256,uint256)
+  #         handler: handleAccrueInterest
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+  # - kind: ethereum/contract
+  #   name: cUSDT
+  #   network: mainnet
+  #   source:
+  #     address: "0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9"
+  #     abi: CToken
+  #     startBlock: 9800000 
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/ctoken.ts
+  #     entities:
+  #       - Market
+  #       - Account
+  #       - AccountBond
+  #     abis:
+  #       - name: CToken
+  #         file: ./abis/ctoken.json
+  #       - name: ERC20
+  #         file: ./abis/erc20.json
+  #       - name: ERC20Bytes32
+  #         file: './abis/erc20_bytes32.json'
+  #     eventHandlers:
+  #       - event: AccrueInterest(uint256,uint256,uint256)
+  #         handler: handleAccrueInterest
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
+  # - kind: ethereum/contract
+  #   name: LendingPoolCore
+  #   network: mainnet
+  #   source:
+  #     address: "0x3dfd23A6c5E8BbcFc9581d2E864a68feb6a076d3"
+  #     abi: LendingPoolCore
+  #     startBlock: 9240000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/lendingPoolCore.ts
+  #     entities:
+  #       - Market
+  #     abis:
+  #       - name: LendingPoolCore
+  #         file: ./abis/lendingPoolCore.json
+  #       - name: AToken
+  #         file: ./abis/atoken.json
+  #       - name: ERC20
+  #         file: ./abis/erc20.json
+  #       - name: ERC20Bytes32
+  #         file: './abis/erc20_bytes32.json'
+  #     eventHandlers:
+  #       - event: ReserveUpdated(indexed address,uint256,uint256,uint256,uint256,uint256) # deprecated
+  #         handler: handleReserveUpdated
+  #       # - event: ReserveDataUpdated(indexed address,uint256,uint256,uint256,uint256,uint256,uint256)  # new one
+  #       #   handler: handleReserveDataUpdated
+  # - kind: ethereum/contract
+  #   name: aDAI
+  #   network: mainnet
+  #   source:
+  #     address: "0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d"
+  #     abi: AToken
+  #     startBlock: 9240000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/atoken.ts
+  #     entities:
+  #       - Market
+  #       - Account
+  #       - AccountBond
+  #     abis:
+  #       - name: AToken
+  #         file: ./abis/atoken.json
+  #       - name: ERC20
+  #         file: ./abis/erc20.json
+  #       - name: ERC20Bytes32
+  #         file: './abis/erc20_bytes32.json'
+  #     eventHandlers:
+  #       - event: MintOnDeposit(indexed address,uint256,uint256,uint256)
+  #         handler: handleMintOnDeposit
+  #       - event: Redeem(indexed address,uint256,uint256,uint256)
+  #         handler: handleRedeem
+  #       - event: BurnOnLiquidation(indexed address,uint256,uint256,uint256)
+  #         handler: handleBurnOnLiquidation
+  #       - event: BalanceTransfer(indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
+  #         handler: handleBalanceTransfer 
+  # - kind: ethereum/contract
+  #   name: aUSDT
+  #   network: mainnet
+  #   source:
+  #     address: "0x71fc860F7D3A592A4a98740e39dB31d25db65ae8"
+  #     abi: AToken
+  #     startBlock: 9240000
+  #   mapping:
+  #     kind: ethereum/events
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/atoken.ts
+  #     entities:
+  #       - Market
+  #       - Account
+  #       - AccountBond
+  #     abis:
+  #       - name: AToken
+  #         file: ./abis/atoken.json
+  #       - name: ERC20
+  #         file: ./abis/erc20.json
+  #       - name: ERC20Bytes32
+  #         file: './abis/erc20_bytes32.json'
+  #     eventHandlers:
+  #       - event: MintOnDeposit(indexed address,uint256,uint256,uint256)
+  #         handler: handleMintOnDeposit
+  #       - event: Redeem(indexed address,uint256,uint256,uint256)
+  #         handler: handleRedeem
+  #       - event: BurnOnLiquidation(indexed address,uint256,uint256,uint256)
+  #         handler: handleBurnOnLiquidation
+  #       - event: BalanceTransfer(indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
+  #         handler: handleBalanceTransfer
   - kind: ethereum/contract
-    name: cSAI
+    name: Pot
     network: mainnet
     source:
-      address: "0xf5dce57282a584d2746faf1593d3121fcac444dc"
-      abi: CToken
-      startBlock: 7700000
+      address: "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
+      abi: Pot
+      startBlock: 8928160
     mapping:
-      kind: ethereum/events
+      kind: ethereum/event
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./src/mappings/ctoken.ts
+      file: ./src/mappings/pot.ts
       entities:
         - Market
+      abis:
+        - name: Pot
+          file: ./abis/pot.json
+      eventHandlers:
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,bytes)
+          topic0: "0x29ae811400000000000000000000000000000000000000000000000000000000" # file(bytes32,uint256)
+          handler: handleFile
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,bytes)
+          topic0: "0x9f678cca00000000000000000000000000000000000000000000000000000000" # drip()
+          handler: handleDrip
+  - kind: ethereum/contract
+    name: Chai
+    network: mainnet
+    source:
+      address: "0x06AF07097C9Eeb7fD685c692751D5C66dB49c215"
+      abi: Chai
+      startBlock: 9021570
+    mapping:
+      kind: ethereum/event
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ./src/mappings/chai.ts
+      entities:
         - Account
         - AccountBond
       abis:
-        - name: CToken
-          file: ./abis/ctoken.json
-        - name: ERC20
-          file: ./abis/erc20.json
-        - name: ERC20Bytes32
-          file: './abis/erc20_bytes32.json'
+        - name: Chai
+          file: ./abis/chai.json
       eventHandlers:
-        - event: AccrueInterest(uint256,uint256,uint256)
-          handler: handleAccrueInterest
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-  - kind: ethereum/contract
-    name: cDAI
-    network: mainnet
-    source:
-      address: "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643"
-      abi: CToken
-      startBlock: 7700000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: ./src/mappings/ctoken.ts
-      entities:
-        - Market
-        - Account
-        - AccountBond
-      abis:
-        - name: CToken
-          file: ./abis/ctoken.json
-        - name: ERC20
-          file: ./abis/erc20.json
-        - name: ERC20Bytes32
-          file: './abis/erc20_bytes32.json'
-      eventHandlers:
-        - event: AccrueInterest(uint256,uint256,uint256)
-          handler: handleAccrueInterest
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-  - kind: ethereum/contract
-    name: cUSDC
-    network: mainnet
-    source:
-      address: "0x39aa39c021dfbae8fac545936693ac917d5e7563"
-      abi: CToken
-      startBlock: 7700000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: ./src/mappings/ctoken.ts
-      entities:
-        - Market
-        - Account
-        - AccountBond
-      abis:
-        - name: CToken
-          file: ./abis/ctoken.json
-        - name: ERC20
-          file: ./abis/erc20.json
-        - name: ERC20Bytes32
-          file: './abis/erc20_bytes32.json'
-      eventHandlers:
-        - event: AccrueInterest(uint256,uint256,uint256)
-          handler: handleAccrueInterest
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-  - kind: ethereum/contract
-    name: cUSDT
-    network: mainnet
-    source:
-      address: "0xf650C3d88D12dB855b8bf7D11Be6C55A4e07dCC9"
-      abi: CToken
-      startBlock: 9800000 
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: ./src/mappings/ctoken.ts
-      entities:
-        - Market
-        - Account
-        - AccountBond
-      abis:
-        - name: CToken
-          file: ./abis/ctoken.json
-        - name: ERC20
-          file: ./abis/erc20.json
-        - name: ERC20Bytes32
-          file: './abis/erc20_bytes32.json'
-      eventHandlers:
-        - event: AccrueInterest(uint256,uint256,uint256)
-          handler: handleAccrueInterest
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-  - kind: ethereum/contract
-    name: LendingPoolCore
-    network: mainnet
-    source:
-      address: "0x3dfd23A6c5E8BbcFc9581d2E864a68feb6a076d3"
-      abi: LendingPoolCore
-      startBlock: 9240000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: ./src/mappings/lendingPoolCore.ts
-      entities:
-        - Market
-      abis:
-        - name: LendingPoolCore
-          file: ./abis/lendingPoolCore.json
-        - name: AToken
-          file: ./abis/atoken.json
-        - name: ERC20
-          file: ./abis/erc20.json
-        - name: ERC20Bytes32
-          file: './abis/erc20_bytes32.json'
-      eventHandlers:
-        - event: ReserveUpdated(indexed address,uint256,uint256,uint256,uint256,uint256) # deprecated
-          handler: handleReserveUpdated
-        # - event: ReserveDataUpdated(indexed address,uint256,uint256,uint256,uint256,uint256,uint256)  # new one
-        #   handler: handleReserveDataUpdated
-  - kind: ethereum/contract
-    name: aDAI
-    network: mainnet
-    source:
-      address: "0xfC1E690f61EFd961294b3e1Ce3313fBD8aa4f85d"
-      abi: AToken
-      startBlock: 9240000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: ./src/mappings/atoken.ts
-      entities:
-        - Market
-        - Account
-        - AccountBond
-      abis:
-        - name: AToken
-          file: ./abis/atoken.json
-        - name: ERC20
-          file: ./abis/erc20.json
-        - name: ERC20Bytes32
-          file: './abis/erc20_bytes32.json'
-      eventHandlers:
-        - event: MintOnDeposit(indexed address,uint256,uint256,uint256)
-          handler: handleMintOnDeposit
-        - event: Redeem(indexed address,uint256,uint256,uint256)
-          handler: handleRedeem
-        - event: BurnOnLiquidation(indexed address,uint256,uint256,uint256)
-          handler: handleBurnOnLiquidation
-        - event: BalanceTransfer(indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
-          handler: handleBalanceTransfer 
-  - kind: ethereum/contract
-    name: aUSDT
-    network: mainnet
-    source:
-      address: "0x71fc860F7D3A592A4a98740e39dB31d25db65ae8"
-      abi: AToken
-      startBlock: 9240000
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: ./src/mappings/atoken.ts
-      entities:
-        - Market
-        - Account
-        - AccountBond
-      abis:
-        - name: AToken
-          file: ./abis/atoken.json
-        - name: ERC20
-          file: ./abis/erc20.json
-        - name: ERC20Bytes32
-          file: './abis/erc20_bytes32.json'
-      eventHandlers:
-        - event: MintOnDeposit(indexed address,uint256,uint256,uint256)
-          handler: handleMintOnDeposit
-        - event: Redeem(indexed address,uint256,uint256,uint256)
-          handler: handleRedeem
-        - event: BurnOnLiquidation(indexed address,uint256,uint256,uint256)
-          handler: handleBurnOnLiquidation
-        - event: BalanceTransfer(indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
-          handler: handleBalanceTransfer 
