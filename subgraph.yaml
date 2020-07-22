@@ -206,48 +206,82 @@ dataSources:
   #         handler: handleBurnOnLiquidation
   #       - event: BalanceTransfer(indexed address,indexed address,uint256,uint256,uint256,uint256,uint256)
   #         handler: handleBalanceTransfer
+  # - kind: ethereum/contract
+  #   name: Pot
+  #   network: mainnet
+  #   source:
+  #     address: "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
+  #     abi: Pot
+  #     startBlock: 8928160
+  #   mapping:
+  #     kind: ethereum/event
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/pot.ts
+  #     entities:
+  #       - Market
+  #     abis:
+  #       - name: Pot
+  #         file: ./abis/pot.json
+  #     eventHandlers:
+  #       - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,bytes)
+  #         topic0: "0x29ae811400000000000000000000000000000000000000000000000000000000" # file(bytes32,uint256)
+  #         handler: handleFile
+  #       - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,bytes)
+  #         topic0: "0x9f678cca00000000000000000000000000000000000000000000000000000000" # drip()
+  #         handler: handleDrip
+  # - kind: ethereum/contract
+  #   name: Chai
+  #   network: mainnet
+  #   source:
+  #     address: "0x06AF07097C9Eeb7fD685c692751D5C66dB49c215"
+  #     abi: Chai
+  #     startBlock: 9021570
+  #   mapping:
+  #     kind: ethereum/event
+  #     apiVersion: 0.0.4
+  #     language: wasm/assemblyscript
+  #     file: ./src/mappings/chai.ts
+  #     entities:
+  #       - Account
+  #       - AccountBond
+  #     abis:
+  #       - name: Chai
+  #         file: ./abis/chai.json
+  #     eventHandlers:
+  #       - event: Transfer(indexed address,indexed address,uint256)
+  #         handler: handleTransfer
   - kind: ethereum/contract
-    name: Pot
+    name: iSAI
     network: mainnet
     source:
-      address: "0x197E90f9FAD81970bA7976f33CbD77088E5D7cf7"
-      abi: Pot
-      startBlock: 8928160
+      address: "0x14094949152eddbfcd073717200da82fed8dc960"
+      abi: IToken
+      startBlock: 7867896
     mapping:
       kind: ethereum/event
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./src/mappings/pot.ts
+      file: ./src/mappings/itoken.ts
       entities:
         - Market
-      abis:
-        - name: Pot
-          file: ./abis/pot.json
-      eventHandlers:
-        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,bytes)
-          topic0: "0x29ae811400000000000000000000000000000000000000000000000000000000" # file(bytes32,uint256)
-          handler: handleFile
-        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,bytes)
-          topic0: "0x9f678cca00000000000000000000000000000000000000000000000000000000" # drip()
-          handler: handleDrip
-  - kind: ethereum/contract
-    name: Chai
-    network: mainnet
-    source:
-      address: "0x06AF07097C9Eeb7fD685c692751D5C66dB49c215"
-      abi: Chai
-      startBlock: 9021570
-    mapping:
-      kind: ethereum/event
-      apiVersion: 0.0.4
-      language: wasm/assemblyscript
-      file: ./src/mappings/chai.ts
-      entities:
         - Account
         - AccountBond
       abis:
-        - name: Chai
-          file: ./abis/chai.json
+        - name: IToken
+          file: ./abis/itoken.json
+        - name: ERC20
+          file: ./abis/erc20.json
+        - name: ERC20Bytes32
+          file: ./abis/erc20_bytes32.json
       eventHandlers:
+        - event: Mint(indexed address,uint256,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,uint256,uint256,uint256)
+          handler: handleBurn
+        - event: Borrow(indexed address,uint256,uint256,address,address,bool)
+          handler: handleBorrow
+        - event: Repay(indexed bytes32,indexed address,address,uint256,bool)
+          handler: handleRepay
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer

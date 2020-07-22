@@ -3,6 +3,7 @@ import { ERC20 } from '../types/cDAI/ERC20'
 import { ERC20Bytes32 } from '../types/cDAI/ERC20Bytes32'
 import { CToken } from '../types/cDAI/CToken'
 import { AToken } from '../types/LendingPoolCore/AToken'
+import { IToken } from '../types/iSAI/IToken'
 import {
   Market,
   Account,
@@ -61,7 +62,6 @@ export function loadOrCreateCTokenMarket(marketID: string): Market {
     market.name = contract.name()
     market.symbol = contract.symbol()
     market.decimals = contract.decimals().toI32()
-    market.protocol = 'Compound'
     market.underlyingAddress = contract.underlying().toHexString()
     let nameStringCall = underlying.try_name()
     if (nameStringCall.reverted) {
@@ -77,7 +77,7 @@ export function loadOrCreateCTokenMarket(marketID: string): Market {
       market.underlyingName = nameStringCall.value
       market.underlyingSymbol = underlying.symbol()
     }
-
+    
     if (market.underlyingAddress == SAI_ADDRESS) {
       market.name = 'Compound Sai'
       market.symbol = 'cSAI'
@@ -86,6 +86,7 @@ export function loadOrCreateCTokenMarket(marketID: string): Market {
     }
     
     market.underlyingDecimals = underlying.decimals()
+    market.protocol = 'Compound'
     market.exchangeRate = zeroBD
     market.supplyRate = zeroBD
     market.blockNumber = 0
@@ -210,6 +211,71 @@ export function loadOrCreateChaiMarket(): Market {
     market.timestamp = 0
     market.save()
   }
+
+  return market as Market
+}
+
+export function loadOrCreateITokenMarket(marketID: string): Market {
+  let market = Market.load(marketID)
+  if (market === null) {
+    let contract = IToken.bind(Address.fromString(marketID))
+    let underlying = ERC20.bind(contract.loanTokenAddress() as Address)
+    let underlyingBytes = ERC20Bytes32.bind(contract.loanTokenAddress() as Address)
+    market = new Market(marketID)
+    market.name = contract.name()
+    market.symbol = contract.symbol()
+    market.decimals = contract.decimals()
+    market.underlyingAddress = contract.loanTokenAddress().toHexString()
+    let nameStringCall = underlying.try_name()
+    if (nameStringCall.reverted) {
+      let nameBytesCall = underlyingBytes.try_name()
+      if (nameBytesCall.reverted) {
+        market.underlyingName = ''
+        market.underlyingSymbol = ''
+      } else {
+        market.underlyingName = nameBytesCall.value.toString()
+        market.underlyingSymbol = underlyingBytes.symbol().toString()
+      }
+    } else {
+      market.underlyingName = nameStringCall.value
+      market.underlyingSymbol = underlying.symbol()
+    }
+
+    if (market.underlyingAddress == SAI_ADDRESS) {
+      market.name = 'Fulcrum SAI iToken'
+      market.symbol = 'iSAI'
+      market.underlyingName = 'Dai Stablecoin v1.0'
+      market.underlyingSymbol = 'SAI'
+    }
+    
+    market.underlyingDecimals = underlying.decimals()
+
+    market.protocol = 'Fulcrum'
+    market.exchangeRate = zeroBD
+    market.supplyRate = zeroBD
+    market.blockNumber = 0
+    market.timestamp = 0
+    market.save()
+  }
+
+  return market as Market
+}
+
+export function updateITokenMarket(marketID: string, blockNumber: i32, timestamp: i32): Market {
+  let market = loadOrCreateITokenMarket(marketID)
+  let contract = IToken.bind(Address.fromString(marketID))
+  let exchangeRate = contract.tokenPrice()
+    .toBigDecimal()
+    .div(weiDecimalBD)
+  let supplyRate = contract.supplyInterestRate()
+    .toBigDecimal()
+    .div(weiDecimalBD)
+    .div(BigDecimal.fromString('100'))
+  market.exchangeRate = exchangeRate
+  market.supplyRate = supplyRate
+  market.blockNumber = blockNumber
+  market.timestamp = timestamp
+  market.save()
 
   return market as Market
 }
