@@ -27,9 +27,6 @@ type AccountBond @entity {
   principalBalance: BigDecimal!
   totalUnderlyingSupplied: BigDecimal!
   totalUnderlyingRedeemed: BigDecimal!
-  # underlyingBalance: BigDecimal!
-  # currentInterestAccrued: BigDecimal!
-  # lifetimeInterestAccrued: BigDecimal!
 }
 
 enum Protocol {

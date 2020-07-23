@@ -73,3 +73,12 @@ yarn deploy:local
 ```
 
 Any updates can be made to this repo and re-running yarn deploy:local without needing to re-initialize the environment.
+
+
+## Calculate balance, profit, accrued interest 
+
+Underlying Balance = `AccountBond.normalizedBalance` * `Market.exchangeRate`
+
+Current Profit = Underlying balance - `AccountBond.principalBalance`
+
+Accrued Interest = Underlying balance + `AccountBond.totalUnderlyingRedeemed` - `AccountBond.totalUnderlyingSupplied`
